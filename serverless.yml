@@ -1,0 +1,32 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point.
+#
+# More config are added to file in future to extend.
+#
+# This file in here was used to declare the cloud provider, version of node.js and region of deployment
+#
+# For full config options, check the docs:
+#    v1.docs.serverless.com
+#
+# Happy Coding!
+
+service: ServerlessEnterpriseAssignment4
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs16.x  
+
+# Declare the function to call hello function from handler.js
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: /
+          method: get
+
+
