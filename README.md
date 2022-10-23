@@ -64,14 +64,7 @@ $ git clone https://github.com/iopipe/lambda-workshop
 $ npm install
 ```
 
-## Re-name the project!
 
-Edit `serverless.yml` and `doge.js` to change `iopipe-workshop-doge-1` to a unique name.
-
-```
-$ sed -i "s/iopipe-workshop-doge-1/iopipe-workshop-doge-$(($RANDOM*$RANDOM))/g" doge.js serverless.yml
-# On OS X: sed -i "" -e "s/iopipe-workshop-doge-1/iopipe-workshop-doge-$(($RANDOM*$RANDOM))/g" doge.js serverless.yml
-```
 
 ## Deploy the app:
 
