@@ -7,6 +7,8 @@
 #
 # This file in here was used to declare the cloud provider, version of node.js and region of deployment
 #
+# In this file we making the program replicating the data from one bucket to another bucket
+#
 # For full config options, check the docs:
 #    v1.docs.serverless.com
 #
@@ -19,6 +21,32 @@ provider:
   region: us-east-1
   runtime: nodejs16.x  
 
+
+custom:
+  inputBucket: replicator-input-101
+  outputBucket: replicator-output-101
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: "arn:aws:s3:::${self:custom.outputBucket}/*"
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: "arn:aws:s3:::${self:custom.inputBucket}/*"
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
 # Declare the function to call hello function from handler.js
 
 functions:
@@ -28,5 +56,11 @@ functions:
       - http:
           path: /
           method: get
-
+  environment:
+      OUTPUT_BUCKET: ${self:custom.outputBucket}
+    events:
+      - s3:
+          bucket: ${self:custom.inputBucket}
+          existing: true
+          event: s3:ObjectCreated:*
 
